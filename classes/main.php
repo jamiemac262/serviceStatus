@@ -38,7 +38,13 @@ elseif($fn == "allEvent"){
 	echo toJson($event->resolve($_GET["id"]));
 }
 //comment functions
-
+elseif($fn == "newComment"){
+	echo toJson($comment->create($_GET["id"], $_GET['message'], $_GET['status']));
+}elseif($fn == "editComment"){
+	echo toJson($comment->editComment($_GET["id"], $_GET['message'], $_GET['status']));
+}elseif($fn == "deleteComment"){
+	echo toJson($comment->deleteComment($_GET["id"]));
+}
 
 
 function toJson($val){
