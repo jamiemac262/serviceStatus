@@ -43,7 +43,7 @@ class Event{
 		$sth = $conn->prepare("SELECT * FROM event where id = :id");
 		$sth->bindParam(':id', $id, PDO::PARAM_INT);
 		$sth->execute();
-		$result = $sth->setFetchMode(PDO::FETCH_ASSOC; 
+		$result = $sth->setFetchMode(PDO::FETCH_ASSOC); 
 		$events = $sth->fetchAll();
 		
 		return $events;
