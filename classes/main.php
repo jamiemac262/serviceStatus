@@ -23,7 +23,7 @@ if($fn == "login"){
 elseif($fn == "allEvent"){
 	echo toJson($event->getAll());
 }elseif($fn == "getEvent"){
-	echo toJson($event->get($_GET[$id]));
+	echo toJson($event->get($_GET['id']));
 }elseif($fn == "getResolvedEvent"){
 	echo toJson($event->getResolved($_GET[$id]));
 }elseif($fn == "newEvent"){
@@ -37,6 +37,8 @@ elseif($fn == "allEvent"){
 }elseif($fn == "resolve"){
 	echo toJson($event->resolve($_GET["id"]));
 }
+//comment functions
+
 
 
 function toJson($val){

@@ -1,5 +1,5 @@
 <?php
-
+include_once("Comment.php");
 class Event{
 	
 	function connect(){
@@ -37,16 +37,23 @@ class Event{
 		return $events;
 	}
 	
-	function get(){
-		
+	function get($id){
+		$event = Array();
 		$conn = self::connect();//connect to the database
+		
+		//get the event for $id
 		$sth = $conn->prepare("SELECT * FROM event where id = :id");
 		$sth->bindParam(':id', $id, PDO::PARAM_INT);
 		$sth->execute();
 		$result = $sth->setFetchMode(PDO::FETCH_ASSOC); 
 		$events = $sth->fetchAll();
+		$event['event'] = $events[0];
 		
-		return $events;
+		//get the comments for the event
+		$comment = new Comment();
+		$event['comments'] = $comment->getCommentsForEvent($id);
+		
+		return $event;
 	}
 	
 	function getResolved(){

@@ -27,9 +27,21 @@ class Comment{
 		
 	}
 	
+	function getCommentsforEvent($id){
+		$conn = self::connect();//connect to the database
+		$sth = $conn->prepare("SELECT * FROM comment where eventId = :id");
+		$sth->bindParam(':id', $id, PDO::PARAM_INT);
+		$sth->execute();
+		$result = $sth->setFetchMode(PDO::FETCH_ASSOC); 
+		$comments = $sth->fetchAll();
+		
+		return $comments;
+
+		
+	}
+	
 	
 	
 }
-
 
 ?>
