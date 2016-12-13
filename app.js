@@ -1,6 +1,5 @@
 var SERVICE_URL = "classes/main.php?"
 var app = angular.module('app', []); 
-var dumbEvents = [{"id":"3","title":"Unexpected power outage","message":"We experienced an unexpected power outage in our Glasgow data centre.","date":"2016-12-09 14:50:20","status":"1","resolved":"0", "comments":[{"id":"3","eventID":"3","message":"Test coment","date":"2016-12-12 10:10:00"}]},{"id":"3","title":"Unexpected power outage","message":"We experienced an unexpected power outage in our Glasgow data centre.","date":"2016-12-09 14:50:20","status":"3","resolved":"0", "comments":[]}]
 
 app.controller("NavigationController", function($http, $httpParamSerializerJQLike){
 	
