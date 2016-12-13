@@ -10,40 +10,42 @@ $event = new Event();
 $comment = new Comment();
 
 
-$fn = $_GET["fn"];
+$fn = $_POST["fn"];
 
 
 //Login functions
 if($fn == "login"){
 	
-	echo $user->doLogin($_GET["name"], $_GET["pass"]);
+	echo $user->doLogin($_POST["name"], $_POST["pass"]);
 	
 }
 //Event functions
 elseif($fn == "allEvent"){
 	echo toJson($event->getAll());
 }elseif($fn == "getEvent"){
-	echo toJson($event->get($_GET['id']));
+	echo toJson($event->get($_POST['id']));
 }elseif($fn == "getResolvedEvent"){
-	echo toJson($event->getResolved($_GET[$id]));
+	echo toJson($event->getResolved($_POST[$id]));
 }elseif($fn == "newEvent"){
-	echo toJson($event->create($_GET["title"], $_GET["message"], $_GET["status"]));
+	echo toJson($event->create($_POST["title"], $_POST["message"], $_POST["status"]));
 }elseif($fn == "updateEvent"){
-	echo toJson($event->updateEvent($_GET["title"], $_GET["message"], $_GET["status"]));
+	echo toJson($event->updateEvent($_POST["title"], $_POST["message"], $_POST["status"]));
 }elseif($fn == "delEvent"){
-	echo toJson($event->deleteEvent($_GET["id"]));
+	echo toJson($event->deleteEvent($_POST["id"]));
 }elseif($fn == "updateStatus"){
-	echo toJson($event->updateStatus($_GET["id"], $_GET["status"]));
+	echo toJson($event->updateStatus($_POST["id"], $_POST["status"]));
 }elseif($fn == "resolve"){
-	echo toJson($event->resolve($_GET["id"]));
+	echo toJson($event->resolve($_POST["id"]));
 }
 //comment functions
-elseif($fn == "newComment"){
-	echo toJson($comment->create($_GET["id"], $_GET['message'], $_GET['status']));
+elseif($fn == "getComment"){
+	echo toJson($comment->getCommentsForEvent($_POST["id"]));
+}elseif($fn == "newComment"){
+	echo toJson($comment->create($_POST["id"], $_POST['message'], $_POST['status']));
 }elseif($fn == "editComment"){
-	echo toJson($comment->editComment($_GET["id"], $_GET['message'], $_GET['status']));
+	echo toJson($comment->editComment($_POST["id"], $_POST['message'], $_POST['status']));
 }elseif($fn == "deleteComment"){
-	echo toJson($comment->deleteComment($_GET["id"]));
+	echo toJson($comment->deleteComment($_POST["id"]));
 }
 
 
