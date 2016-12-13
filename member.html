@@ -130,6 +130,11 @@
 								</div>
 							</div>
 						</div>
+						<div class="panel panel-primary" ng-show="eventCon.events.length == 0">
+						<div class="panel-body text-center">
+							<h4>It looks like there is nothing to report just now.</h4>
+						</div>
+					</div>
 					</div>
 					<div class="col-md-2">
 					</div>
@@ -228,8 +233,13 @@
 									</div>
 								</div><!--end of updates panel-->
 							</div><!--end of event panel body-->
-						</div><!--end of middle column-->
+						</div><!--end of event panel-->
+						<div class="panel panel-primary" ng-show="eventCon.resolvedEvents.length == 0">
+						<div class="panel-body text-center">
+							<h4>It looks like there is nothing to report just now.</h4>
+						</div>
 					</div>
+					</div><!--end of middle column-->
 					<div class="col-md-2">
 					</div>
 				</div>
