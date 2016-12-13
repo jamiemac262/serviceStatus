@@ -33,6 +33,9 @@
 			<div class="row">
 				<br/>
 				<div class="col-md-2">
+				<form>
+					<input type="text" class="form-control" value="http://www.makeitfortheweb.com/challenge/feed/"
+				</form>
 				</div>
 				<div class="col-md-8" ng-controller="EventController as eventCon">
 					<div class="panel" ng-repeat="event in eventCon.events" ng-class="{'panel-critical': event.status=='1', 'panel-danger': event.status=='2', 'panel-warning': event.status=='3', 'panel-success': event.status=='4'}">
@@ -44,7 +47,7 @@
 									{{event.message}}
 								</div>
 								<div class="panel-footer">
-									<p>Posted: {{event.date}}</p>
+									<p>Last Updated at: {{event.date}}</p>
 								</div>
 								
 							</div>
@@ -96,7 +99,8 @@
 									{{event.message}}
 								</div>
 								<div class="panel-footer">
-									<p>Posted: {{event.date}}</p>
+									<p>Last Updated at: {{event.date}}</p>
+									<p>Resolved at: {{event.resolveDate}}</p>
 								</div>
 								
 							</div>
@@ -137,12 +141,12 @@
 	</body>
 	<footer>
 	</footer>
-	<script src="../bootstrap/jquery.min.js"></script>
-	<script src="../angular.min.js"></script>
+	<script src="externalFiles//bootstrap/jquery.min.js"></script>
+	<script src="externalFiles/angular.min.js"></script>
 	<script src="app.js"></script>
 	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="externalFiles/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="panels.css">
 	<!-- Latest compiled and minified JavaScript -->
-	<script src="../bootstrap/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script src="externalFiles/bootstrap/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </html>

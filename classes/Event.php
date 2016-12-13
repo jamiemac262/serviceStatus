@@ -1,5 +1,6 @@
 <?php
 include_once("Comment.php");
+include_once("RSSHandler.php");
 class Event{
 	
 	function connect(){
@@ -78,17 +79,23 @@ class Event{
 		$sth->bindParam(':date', $f_date, PDO::PARAM_STR);
 		$sth->bindParam(':status', $status, PDO::PARAM_INT);
 		$sth->execute();
+		$rss = new RSSHandler();
+		$rss->publish($title, "A new event has been published by support");
 		
 	}
 	
 	function editEvent($id, $title, $message, $status){
 		
+		$date = new DateTime();
+		$f_date = $date->format('Y-m-d H:i:s');
+		
 		$conn = self::connect();
-		$sth = $conn->prepare("update event SET title=:title, message=:message, status=:status WHERE id=:id");
+		$sth = $conn->prepare("update event SET title=:title, message=:message, status=:status, date=:date WHERE id=:id");
 		$sth->bindParam(':id', $id, PDO::PARAM_INT);
 		$sth->bindParam(':title', $title, PDO::PARAM_STR);
 		$sth->bindParam(':message', $message, PDO::PARAM_STR);
 		$sth->bindParam(':status', $status, PDO::PARAM_INT);
+		$sth->bindParam(':date', $f_date, PDO::PARAM_STR);
 		$sth->execute();	
 		
 	}
@@ -109,14 +116,39 @@ class Event{
 		$sth->bindParam(':id', $id, PDO::PARAM_INT);
 		$sth->bindParam(':status', $status, PDO::PARAM_INT);
 		$sth->execute();	
+		
+		$title = self::getTitle($id);
+		$rss = new RSSHandler();
+		$rss->publish($title, "Event's status has been changed to " . $status);
+		
+		
 	}
 	
 	function resolve($id){
+		
+		$date = new DateTime();
+		$f_date = $date->format('Y-m-d H:i:s');
 		$conn = self::connect();
-		$sth = $conn->prepare("update event SET resolved=1 WHERE id=:id");
+		
+		$sth = $conn->prepare("UPDATE event SET resolved=1, resolveDate=:resolveDate WHERE id=:id");
 		$sth->bindParam(':id', $id, PDO::PARAM_INT);
+		$sth->bindParam(':resolveDate', $f_date, PDO::PARAM_STR);
 		$sth->execute();
 		self::updateStatus($id, 4);
+		$title = self::getTitle($id);
+		$rss = new RSSHandler();
+		$rss->publish($title, "Event has been marked as resolved");
+	}
+	
+	function getTitle($id){
+		$conn = self::connect();
+		$sth = $conn->prepare("SELECT title FROM event WHERE id=:id");
+		$sth->bindParam(':id', $id, PDO::PARAM_INT);
+		$sth->execute();
+		$result = $sth->setFetchMode(PDO::FETCH_ASSOC); 
+		$title = $sth->fetchAll();
+		return $title[0]['title'];
+		
 	}
 	
 }

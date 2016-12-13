@@ -62,7 +62,8 @@
 										{{event.message}}
 									</div>
 									<div class="panel-footer">
-										<p>Posted: {{event.date}}</p>
+										<p>Last updated at: {{event.date}}</p>
+										
 										</div>
 								</div>
 								
@@ -181,10 +182,10 @@
 										{{event.message}}
 									</div>
 									<div class="panel-footer">
-										<p>Posted: {{event.date}}</p>
+										<p>Last Updated at: {{event.date}}</p>
+										<p>Resolved at: {{event.resolveDate}}</p>
 										</div>
 								</div>
-								<button type="button" class="btn btn-info btn-block" ng-click="eventCon.updateMode(event)">update</button>
 								<br>
 								<div class="panel panel-info">
 								<div class="panel-heading" ng-click="eventCon.toggleComments(event)">
@@ -197,32 +198,6 @@
 											</div>
 											<div class="panel-footer">
 												<small>Updated: {{comment.date}}</small>
-											</div>
-										</div>
-										<div class="panel panel-default" ng-show="event.showU">
-											<div class="panel-body">
-												<form role="form">
-													<div class="form-group">
-														<textarea class="form-control" ng-model="event.newComment" placeholder="Message">
-														</textarea>
-													</div>
-											</div>
-											<div class="panel-footer">
-												<form class="form-inline">
-													<div class="form-group">
-															<select ng-model="event.status" class="form-control">
-																<option value="1">Critical</option>
-																<option value="2">Serious</option>
-																<option value="3">Warning</option>
-																<option value="4">All clear</option>
-															</select>
-															</div>
-															<div class="form-group">
-																<button type="submit" ng-click="eventCon.updateEvent(event);" class="btn btn-default">
-																	Submit
-																</button>
-															</div>
-												</form>
 											</div>
 										</div>
 										<div class="panel panel-default" ng-show="event.comments.length == 0">
@@ -274,12 +249,12 @@
 	</body>
 	<footer>
 	</footer>
-	<script src="../bootstrap/jquery.min.js"></script>
-	<script src="../angular.min.js"></script>
+	<script src="externalFiles//bootstrap/jquery.min.js"></script>
+	<script src="externalFiles/angular.min.js"></script>
 	<script src="app.js"></script>
 	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="externalFiles/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="panels.css">
 	<!-- Latest compiled and minified JavaScript -->
-	<script src="../bootstrap/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script src="externalFiles/bootstrap/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </html>

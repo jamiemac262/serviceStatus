@@ -55,6 +55,10 @@ class Comment{
 		//update the status of the event
 		$event = new Event();
 		$event->updateStatus($id, $status);
+		
+		$title = $event->getTitle($id);
+		$rss = new RSSHandler();
+		$rss->publish($title, "Event has been updated.");
 	}
 	
 	function editComment($id, $message, $status){
