@@ -8,47 +8,42 @@ app.controller("NavigationController", function($http, $httpParamSerializerJQLik
 	this.user;
 	
 	this.changePage = function(p, l = true){//p for page l for "rquire login" (boolean)
-		console.log("change " + l + p);
 		if(l == true){
-			console.log("l = true")
 			if(navCon.user == ""||navCon.user == undefined){
-				console.log("user undefined");
 				navCon.page = "login"
 			}else
-				console.log("User defined. changing to: " + p);
 				navCon.page = p;
 		}else{
-			console.log("l = false. changing to: " + p);
 			navCon.page = p;
-			console.log(navCon.page);
 		}
-		console.log(navCon.page);
 	}
 	
 	this.doLogin = function(){
-		data = {
-			"fn" : "login",
-			"name" : navCon.user.username,
-			"pass" : navCon.user.password
+		if(navCon.user == ""||navCon.user == undefined){
+			alert("Your username or password was incorrect");
+		}else{
+			data = {
+				"fn" : "login",
+				"name" : navCon.user.username,
+				"pass" : navCon.user.password
+			}
+			$http({
+				url: SERVICE_URL,
+				method: 'POST',
+				data: $httpParamSerializerJQLike(data),
+				headers: {
+				  'Content-Type': 'application/x-www-form-urlencoded'
+				}
+			}).then(function(response) {
+				if(response.data == "1"){
+					navCon.changePage("unresolved");
+				}else{
+					alert("Your username or password was incorrect");
+				}
+			});
+		
 		}
-		$http({
-			url: SERVICE_URL,
-			method: 'POST',
-			data: $httpParamSerializerJQLike(data),
-			headers: {
-			  'Content-Type': 'application/x-www-form-urlencoded'
-			}
-		}).then(function(response) {
-			if(response.data == "1"){
-				navCon.changePage("unresolved");
-			}else{
-				alert("Your usrname or password was incorrect");
-			}
-		});
-		
-		
 	}
-	
 });
 
 
@@ -71,7 +66,6 @@ app.controller('EventController', function($http, $httpParamSerializerJQLike){
 			}
 		}).then(function(response) {
 			eventCon.events = response.data;
-			console.log(eventCon.events);
 		});
 		
 	}
@@ -88,7 +82,6 @@ app.controller('EventController', function($http, $httpParamSerializerJQLike){
 			  'Content-Type': 'application/x-www-form-urlencoded'
 			}
 		}).then(function(response) {
-			console.log(response.data);
 			eventCon.resolvedEvents = response.data;
 		});
 		
@@ -106,7 +99,6 @@ app.controller('EventController', function($http, $httpParamSerializerJQLike){
 			  'Content-Type': 'application/x-www-form-urlencoded'
 			}
 		}).then(function(response) {
-			console.log(response);
 			if(resolved == false){
 				eventCon.events[i].comments = response.data;
 			}else{
@@ -116,25 +108,18 @@ app.controller('EventController', function($http, $httpParamSerializerJQLike){
 		
 	}
 	this.toggle = function(e, i, r = false){// e for event, i for index, r for resolved - default to false
-		console.log(e);
 		if(e.show == true){
 			e.show = false;
-			console.log(e.show);
 		}else{
 			eventCon.getComments(e.id, i, r);
 			e.show = true;
-			
-			console.log(e);
 		}
 	}
 	this.toggleComments = function(e){
-		console.log(e);
 		if(e.showC == true){
 			e.showC = false;
-			console.log(e.showC);
 		}else{
 			e.showC = true;
-			console.log(e.showC);
 		}
 	}
 	
@@ -159,7 +144,6 @@ app.controller('EventController', function($http, $httpParamSerializerJQLike){
 			  'Content-Type': 'application/x-www-form-urlencoded'
 			}
 		}).then(function(response) {
-			console.log(response);
 			if(response.data == "null"){
 				eventCon.getEvents();
 				eventCon.newEvent = undefined;
@@ -190,7 +174,6 @@ app.controller('EventController', function($http, $httpParamSerializerJQLike){
 			  'Content-Type': 'application/x-www-form-urlencoded'
 			}
 		}).then(function(response) {
-			console.log(response);
 			if(response.data == "null"){
 				eventCon.getEvents();
 				eventCon.newEvent = undefined;
@@ -217,7 +200,6 @@ app.controller('EventController', function($http, $httpParamSerializerJQLike){
 			  'Content-Type': 'application/x-www-form-urlencoded'
 			}
 		}).then(function(response) {
-		console.log(response);
 		if(response.data == "null"){
 			eventCon.getEvents();
 		}else{
@@ -227,30 +209,22 @@ app.controller('EventController', function($http, $httpParamSerializerJQLike){
 	}
 	
 	this.toggleOptions = function(e){
-		console.log(e);
 		if(e.showO == true){
 			e.showO = false;
-			console.log(e.showO);
 		}else{
 			e.showO = true;
-			console.log(e.showO);
 		}
 	}
 	
 	this.updateMode = function(e){
-		console.log(e);
 		if(e.showC == true){
-			console.log(e.showC);
 		}else{
 			e.showC = true;
-			console.log(e.showC);
 		}
 		if(e.showU == true){
 			e.showU = false;
-			console.log(e.showU);
 		}else{
 			e.showU = true;
-			console.log(e.showU);
 		}
 	}
 	

@@ -34,12 +34,13 @@
 				<br/>
 				<div class="col-md-2">
 				<form>
-					<input type="text" class="form-control" value="http://www.makeitfortheweb.com/challenge/feed/"
+					<p>RSS feed:</p>
+					<textarea rows="5" class="form-control">"http://www.makeitfortheweb.com/challenge/feed/"</textarea>
 				</form>
 				</div>
 				<div class="col-md-8" ng-controller="EventController as eventCon">
 					<div class="panel" ng-repeat="event in eventCon.events" ng-class="{'panel-critical': event.status=='1', 'panel-danger': event.status=='2', 'panel-warning': event.status=='3', 'panel-success': event.status=='4'}">
-						<div class="panel-heading" ng-click="eventCon.toggle(event, $index)">{{event.title}}</div>
+						<div class="panel-heading" ng-click="eventCon.toggle(event, $index)">{{event.title}} <span class="pull-right glyphicon glyphicon-circle-arrow-right"></span></div>
 						
 						<div class="panel-body" ng-show="event.show">
 							<div class="panel panel-default" >
@@ -54,7 +55,7 @@
 							<br>
 							<div class="panel panel-info">
 							<div class="panel-heading" ng-click="eventCon.toggleComments(event)">
-								Updates
+								Updates <span class="pull-right glyphicon glyphicon-circle-arrow-right"></span>
 							</div>
 								<div class="panel-body" ng-show="event.showC">
 									<div class="panel panel-default" ng-repeat="comment in event.comments">
@@ -96,7 +97,7 @@
 						<div class="panel-body" ng-show="event.show">
 							<div class="panel panel-default" >
 								<div class="panel-body">
-									{{event.message}}
+									{{event.message}} <span class="pull-right glyphicon glyphicon-circle-arrow-right"></span>
 								</div>
 								<div class="panel-footer">
 									<p>Last Updated at: {{event.date}}</p>
@@ -107,7 +108,7 @@
 							<br>
 							<div class="panel panel-info">
 							<div class="panel-heading" ng-click="eventCon.toggleComments(event)">
-								Updates
+								Updates <span class="pull-right glyphicon glyphicon-circle-arrow-right"></span>
 							</div>
 								<div class="panel-body" ng-show="event.showC">
 									<div class="panel panel-default" ng-repeat="comment in event.comments">
@@ -148,5 +149,5 @@
 	<link rel="stylesheet" href="externalFiles/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="panels.css">
 	<!-- Latest compiled and minified JavaScript -->
-	<script src="externalFiles/bootstrap/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script src="externalFiles/bootstrap/js/bootstrap.min.js"></script>
 </html>

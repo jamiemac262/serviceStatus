@@ -5,16 +5,19 @@
     $rssfeed .= '<channel>';
  
 		$servername = "localhost";
-		$username = "root";
-		$password = "WY7tpAxJPeVapG5L";
+		$username = "makeitfo_challenge";
+		$password = "7TIOI7B[wG(#";
+		
 		try {
-			$conn = new PDO("mysql:host=$servername;dbname=iomart", $username);
+			$conn = new PDO("mysql:host=$servername;dbname=makeitfo_challenge", $username, $password);
 			// set the PDO error mode to exception
-			$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
+			$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			return $conn; 
 		}
 		catch(PDOException $e){
 			echo "Connection failed: " . $e->getMessage();
 		}
+		
 		$sth = $conn->prepare("SELECT * FROM rss ORDER BY date DESC");
 		$sth->execute();
 		$result = $sth->setFetchMode(PDO::FETCH_ASSOC); 
