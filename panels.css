@@ -1,0 +1,8 @@
+.panel-critical{
+	border-color: #990000;	
+}
+.panel-critical>.panel-heading{
+  background-image: none;
+  background-color: #990000;
+  color: #ffffff;
+}
