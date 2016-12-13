@@ -5,8 +5,33 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 	</head>
 	<body ng-app="app">
-		<div class="container">
+	<div ng-controller="NavigationController as nav">
+		<div ng-if="nav.page=='login'">
+			{{nav.changePage('unresolved', false)}}
+		<!-- The purpose of this <div> is to trigger a changePage call redircting the user to the "unresolved" page
+			This is done in th HTML file because the index.html and member.html pages both share the same js file.
+		-->
+		</div>
+		<div class="container-fluid">
 			<div class="row">
+				<div class="col-12">
+					<div class="header clearfix">
+						<h3 class="text-muted ">Melbourn Status</h3>
+							<nav>
+								<ul class="nav nav-pills pull-right">
+									<li role="presentation" ng-class="{'active' : nav.page == 'unresolved'}"><a href="#" ng-click="nav.changePage('unresolved', false)">Unresolved Events</a></li>
+									<li role="presentation" ng-class="{'active' : nav.page == 'resolved'}"><a href="#" ng-click="nav.changePage('resolved', false)">Resolved Events</a></li>
+									<li role="presentation"><a href="member.html">Login</a></li>
+									
+								</ul>
+							</nav>
+						</div>
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid" ng-if="nav.page == 'unresolved'">
+			<div class="row">
+				<br/>
 				<div class="col-md-2">
 				</div>
 				<div class="col-md-8" ng-controller="EventController as eventCon">
@@ -17,6 +42,9 @@
 							<div class="panel panel-default" >
 								<div class="panel-body">
 									{{event.message}}
+								</div>
+								<div class="panel-footer">
+									<p>Posted: {{event.date}}</p>
 								</div>
 								
 							</div>
@@ -47,7 +75,55 @@
 				<div class="col-md-2">
 				</div>
 			</div>
-		</div>
+		</div><!--end of unresolved page-->
+		<div class="container-fluid" ng-if="nav.page == 'resolved'">
+			<div class="row">
+				<br/>
+				<div class="col-md-2">
+				</div>
+				<div class="col-md-8" ng-controller="EventController as eventCon">
+					<div class="panel" ng-repeat="event in eventCon.resolvedEvents" ng-class="{'panel-critical': event.status=='1', 'panel-danger': event.status=='2', 'panel-warning': event.status=='3', 'panel-success': event.status=='4'}">
+						<div class="panel-heading" ng-click="eventCon.toggle(event, $index, true)">{{event.title}}</div>
+						
+						<div class="panel-body" ng-show="event.show">
+							<div class="panel panel-default" >
+								<div class="panel-body">
+									{{event.message}}
+								</div>
+								<div class="panel-footer">
+									<p>Posted: {{event.date}}</p>
+								</div>
+								
+							</div>
+							<br>
+							<div class="panel panel-info">
+							<div class="panel-heading" ng-click="eventCon.toggleComments(event)">
+								Updates
+							</div>
+								<div class="panel-body" ng-show="event.showC">
+									<div class="panel panel-default" ng-repeat="comment in event.comments">
+										<div class="panel-body">
+											<p>{{comment.message}}</p>
+										</div>
+										<div class="panel-footer">
+											<small>Updated: {{comment.date}}</small>
+										</div>
+									</div>
+									<div class="panel panel-default" ng-show="event.comments.length == 0">
+										<div class="panel-body text-center">
+										<p>No updates have been posted.</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2">
+				</div>
+			</div>
+		</div><!--end of rsolved page-->
+		</div><!--end of nav controller-->
 	</body>
 	<footer>
 	</footer>

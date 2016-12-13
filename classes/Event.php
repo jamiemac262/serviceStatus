@@ -63,7 +63,7 @@ class Event{
 		$result = $sth->setFetchMode(PDO::FETCH_ASSOC); 
 		$events = $sth->fetchAll();
 		
-		return events;
+		return $events;
 	}
 	
 	function create($title, $message, $status){
@@ -116,6 +116,7 @@ class Event{
 		$sth = $conn->prepare("update event SET resolved=1 WHERE id=:id");
 		$sth->bindParam(':id', $id, PDO::PARAM_INT);
 		$sth->execute();
+		self::updateStatus($id, 4);
 	}
 	
 }

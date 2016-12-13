@@ -25,7 +25,7 @@ elseif($fn == "allEvent"){
 }elseif($fn == "getEvent"){
 	echo toJson($event->get($_POST['id']));
 }elseif($fn == "getResolvedEvent"){
-	echo toJson($event->getResolved($_POST[$id]));
+	echo toJson($event->getResolved());
 }elseif($fn == "newEvent"){
 	echo toJson($event->create($_POST["title"], $_POST["message"], $_POST["status"]));
 }elseif($fn == "updateEvent"){

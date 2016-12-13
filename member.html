@@ -1,0 +1,275 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	</head>
+	<body ng-app="app">
+		<div class="container-fluid" ng-controller="NavigationController as nav">
+			<div class="row">
+				<div class="col-12">
+					<div class="header clearfix">
+						<h3 class="text-muted ">Melbourn Status</h3>
+							<nav>
+								<ul class="nav nav-pills pull-right">
+									<li role="presentation" ng-class="{'active' : nav.page == 'unresolved'}"><a href="#" ng-click="nav.changePage('unresolved', false)">Unresolved Events</a></li>
+									<li role="presentation" ng-class="{'active' : nav.page == 'resolved'}"><a href="#" ng-click="nav.changePage('resolved', false)">Resolved Events</a></li>
+									<li role="presentation"><a href="index.html">Logout</a></li>
+									
+								</ul>
+							</nav>
+						</div>
+				</div>
+			</div>
+			<div class="container-fluid" ng-if="nav.page == 'unresolved'" ng-controller="EventController as eventCon">
+				<div class="row">
+				<br/>
+					<div class="col-md-4">
+						<div class="panel panel-info">
+							<div class="panel-heading">
+								<h5>Create new Event</h5>
+							</div>
+							<div class="panel-body">
+								<form role="form">
+									<div class="form-group">
+									<select ng-model="eventCon.newEvent.status" class="form-control">
+										<option value="1">Critical</option>
+										<option value="2">Serious</option>
+										<option value="3">Warning</option>
+										<option value="4">All clear</option>
+									</select>
+									</div>
+									<div class="form-group">
+									<input type="text" class="form-control" ng-model="eventCon.newEvent.title" placeholder="Title"/>
+									</div>
+									<div class="form-group">
+									<textarea class="form-control" ng-model="eventCon.newEvent.message" placeholder="Message"></textarea>
+									</div>
+									<button type="submit" ng-click="eventCon.addEvent();" class="btn btn-default">
+										Submit
+									</button>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="panel" ng-repeat="event in eventCon.events" ng-class="{'panel-critical': event.status=='1', 'panel-danger': event.status=='2', 'panel-warning': event.status=='3', 'panel-success': event.status=='4'}">
+							<div class="panel-heading" ng-click="eventCon.toggle(event, $index, false)">{{event.title}}</div>
+							
+							<div class="panel-body" ng-show="event.show">
+								<div class="panel panel-default" >
+									<div class="panel-body">
+										{{event.message}}
+									</div>
+									<div class="panel-footer">
+										<p>Posted: {{event.date}}</p>
+										</div>
+								</div>
+								
+								<div class="panel panel-primary">
+											<div class="panel-heading" ng-click="eventCon.toggleOptions(event)">
+											Options
+											</div>
+											<div class="panel-body" ng-show="event.showO">
+												<div class="btn-group btn-group-justified">
+													<div class="btn-group">
+														<button type="button" class="btn btn-success" ng-click="eventCon.resolve(event)">resolve</button>
+													</div>
+													<div class="btn-group">
+														<button type="button" class="btn btn-info" ng-click="eventCon.updateMode(event)">update</button>
+													</div>
+												</div>
+											</div>
+										</div>
+								<br>
+								<div class="panel panel-info">
+								<div class="panel-heading" ng-click="eventCon.toggleComments(event)">
+									Updates
+								</div>
+									<div class="panel-body" ng-show="event.showC">
+										<div class="panel panel-default" ng-repeat="comment in event.comments">
+											<div class="panel-body">
+												<p>{{comment.message}}</p>
+											</div>
+											<div class="panel-footer">
+												<small>Updated: {{comment.date}}</small>
+											</div>
+										</div>
+										<div class="panel panel-default" ng-show="event.showU">
+											<div class="panel-body">
+												<form role="form">
+													<div class="form-group">
+														<textarea class="form-control" ng-model="event.newComment" placeholder="Message">
+														</textarea>
+													</div>
+											</div>
+											<div class="panel-footer">
+												<form class="form-inline">
+													<div class="form-group">
+															<select ng-model="event.status" class="form-control">
+																<option value="1">Critical</option>
+																<option value="2">Serious</option>
+																<option value="3">Warning</option>
+																<option value="4">All clear</option>
+															</select>
+															</div>
+															<div class="form-group">
+																<button type="submit" ng-click="eventCon.updateEvent(event);" class="btn btn-default">
+																	Submit
+																</button>
+															</div>
+												</form>
+											</div>
+										</div>
+										<div class="panel panel-default" ng-show="event.comments.length == 0">
+											<div class="panel-body text-center">
+											<p>No updates have been posted.</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2">
+					</div>
+				</div>
+			</div><!--End of unresolved page-->
+			<div class="container-fluid" ng-show="nav.page == 'resolved'" ng-controller="EventController as eventCon">
+				<div class="row">
+				<br/>
+					<div class="col-md-4">
+						<div class="panel panel-info">
+							<div class="panel-heading">
+								<h5>Create new Event</h5>
+							</div>
+							<div class="panel-body">
+								<form role="form">
+									<div class="form-group">
+									<select ng-model="eventCon.newEvent.status" class="form-control">
+										<option value="1">Critical</option>
+										<option value="2">Serious</option>
+										<option value="3">Warning</option>
+										<option value="4">All clear</option>
+									</select>
+									</div>
+									<div class="form-group">
+									<input type="text" class="form-control" ng-model="eventCon.newEvent.title" placeholder="Title"/>
+									</div>
+									<div class="form-group">
+									<textarea class="form-control" ng-model="eventCon.newEvent.message" placeholder="Message"></textarea>
+									</div>
+									<button type="submit" ng-click="eventCon.addEvent();" class="btn btn-default">
+										Submit
+									</button>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="panel" ng-repeat="event in eventCon.resolvedEvents" ng-class="{'panel-critical': event.status=='1', 'panel-danger': event.status=='2', 'panel-warning': event.status=='3', 'panel-success': event.status=='4'}">
+							<div class="panel-heading" ng-click="eventCon.toggle(event, $index, true)">{{event.title}}</div>
+							
+							<div class="panel-body" ng-show="event.show">
+								<div class="panel panel-default" >
+									<div class="panel-body">
+										{{event.message}}
+									</div>
+									<div class="panel-footer">
+										<p>Posted: {{event.date}}</p>
+										</div>
+								</div>
+								<button type="button" class="btn btn-info btn-block" ng-click="eventCon.updateMode(event)">update</button>
+								<br>
+								<div class="panel panel-info">
+								<div class="panel-heading" ng-click="eventCon.toggleComments(event)">
+									Updates
+								</div>
+									<div class="panel-body" ng-show="event.showC">
+										<div class="panel panel-default" ng-repeat="comment in event.comments">
+											<div class="panel-body">
+												<p>{{comment.message}}</p>
+											</div>
+											<div class="panel-footer">
+												<small>Updated: {{comment.date}}</small>
+											</div>
+										</div>
+										<div class="panel panel-default" ng-show="event.showU">
+											<div class="panel-body">
+												<form role="form">
+													<div class="form-group">
+														<textarea class="form-control" ng-model="event.newComment" placeholder="Message">
+														</textarea>
+													</div>
+											</div>
+											<div class="panel-footer">
+												<form class="form-inline">
+													<div class="form-group">
+															<select ng-model="event.status" class="form-control">
+																<option value="1">Critical</option>
+																<option value="2">Serious</option>
+																<option value="3">Warning</option>
+																<option value="4">All clear</option>
+															</select>
+															</div>
+															<div class="form-group">
+																<button type="submit" ng-click="eventCon.updateEvent(event);" class="btn btn-default">
+																	Submit
+																</button>
+															</div>
+												</form>
+											</div>
+										</div>
+										<div class="panel panel-default" ng-show="event.comments.length == 0">
+											<div class="panel-body text-center">
+											<p>No updates have been posted.</p>
+											</div>
+										</div>
+									</div>
+								</div><!--end of updates panel-->
+							</div><!--end of event panel body-->
+						</div><!--end of middle column-->
+					</div>
+					<div class="col-md-2">
+					</div>
+				</div>
+			</div><!--End of unresolved page-->
+			
+			<div class="container-fluid" ng-show="nav.page == 'login'">
+			<div class="row">
+				<div class="col-md-4">
+				</div>
+				<div class="col-md-4">
+				<br/>
+				<br/>
+				<br/>
+					<form role="form">
+						<div class="form-group">
+							<input type="text" class="form-control" ng-model="nav.user.username" placeholder="username..."/>
+						</div>
+						<div class="form-group">
+							<input type="password" class="form-control" ng-model="nav.user.password" placeholder="Password..."/>
+						</div>
+						<button type="submit" ng-click="nav.doLogin();" class="btn btn-default">
+							Submit
+						</button>
+					</form>
+				</div>
+				<div class="col-md-4">
+				</div>
+			</div>
+		</div>
+			
+		</div>
+	</body>
+	<footer>
+	</footer>
+	<script src="../bootstrap/jquery.min.js"></script>
+	<script src="../angular.min.js"></script>
+	<script src="app.js"></script>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="panels.css">
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="../bootstrap/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</html>
